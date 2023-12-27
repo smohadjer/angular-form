@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <form method="POST" action="">
+    <form method="POST" action="api/form">
       <div class="row">
         <label>First name</label>:
         <input name="first-name">
