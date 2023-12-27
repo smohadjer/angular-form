@@ -1,5 +1,24 @@
-:host {
-  padding: 1em;
-  background: #eee;
+form {
+  padding-top: 1rem;
+}
+
+label {
   display: block;
+  margin: .5em 0;
+  font-weight: bold;
+}
+
+.flex {
+  display: flex;
+  gap: 1em;
+}
+
+.flex > * {
+  width: calc(50vw - 0.5em);
+}
+
+
+.status {
+  background: #eee;
+  padding: 1em;
 }

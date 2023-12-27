@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { FormComponent } from './components/formComponent';
 
@@ -9,13 +8,14 @@ import { FormComponent } from './components/formComponent';
   standalone: true,
   imports: [
     FormComponent,
-    CommonModule,
-    RouterOutlet],
+    ReactiveFormsModule
+  ],
   template: `<main>
-    <app-form></app-form>
+    <app-reactive-form></app-reactive-form>
   </main>`,
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
-  title = 'angular-form';
+
 }
