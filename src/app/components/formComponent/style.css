@@ -1,3 +1,5 @@
-:host .row {
-  margin: 1em 0;
+:host {
+  padding: 1em;
+  background: #eee;
+  display: block;
 }

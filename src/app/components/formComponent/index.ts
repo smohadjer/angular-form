@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { InputComponent } from '../inputComponent';
+
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    InputComponent
+  ],
   template: `
     <form method="POST" action="api/form">
-      <div class="row">
-        <label>First name</label>:
-        <input name="first-name">
-      </div>
-      <div class="row">
-        <label>Last name</label>:
-        <input name="last-name">
-      </div>
+      <app-input [label]="labelFirstName" [name]="nameFirstName"></app-input>
+      <app-input [label]="labelLastName" [name]="nameLastName"></app-input>
       <button>Submit</button>
     </form>
   `,
@@ -22,7 +21,10 @@ import { CommonModule } from '@angular/common';
 })
 
 export class FormComponent {
-
+  labelFirstName = "First name";
+  nameFirstName = "first-name";
+  labelLastName = "Last name";
+  nameLastName = "last-name";
 }
 
 
