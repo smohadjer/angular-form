@@ -6,6 +6,11 @@ label {
   display: block;
   margin: .5em 0;
   font-weight: bold;
+
+  @media (min-width: 768px) {
+    display: inline-block;
+    min-width: 150px;
+  }
 }
 
 .flex {
@@ -19,6 +24,6 @@ label {
 
 
 .status {
-  background: #eee;
+  border: solid 1px;
   padding: 1em;
 }

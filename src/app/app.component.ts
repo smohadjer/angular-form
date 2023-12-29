@@ -1,18 +1,26 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { FormComponent } from './components/formComponent';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    FormComponent,
-    ReactiveFormsModule
+    RouterModule
   ],
-  template: `<main>
-    <app-reactive-form></app-reactive-form>
-  </main>`,
+  template: `
+    <aside>
+      <h2>Reactive form examples</h2>
+      <ul>
+        <li><a routerLink='/'>Minimal</a></li>
+        <li><a routerLink='/formbuilder'>built with FormBuilder</a></li>
+        <li><a routerLink='/validation'>with validation</a></li>
+
+      </ul>
+    </aside>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  `,
   styleUrl: './app.component.css'
 })
 

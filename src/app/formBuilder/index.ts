@@ -1,21 +1,18 @@
-import { JsonPipe, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Validators } from '@angular/forms';
-import { FormArray } from '@angular/forms';
+import { FormBuilder, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { JsonPipe, NgFor } from '@angular/common';
 
 @Component({
   standalone: true,
-  selector: 'app-reactive-form',
+  selector: 'builder-form',
   templateUrl: './template.html',
   styleUrls: ['./style.css'],
-  imports: [NgFor, ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, NgFor, JsonPipe],
 })
 
-export class FormComponent {
+export class FormBuilderComponent {
   profileForm = this.formBuilder.group({
-    firstName: ['', Validators.required],
-    lastName: [''],
+    firstName: [''],
     address: this.formBuilder.group({
       street: [''],
       city: [''],
@@ -29,7 +26,9 @@ export class FormComponent {
     return this.profileForm.get('aliases') as FormArray;
   }
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+
+  }
 
   updateProfile() {
     this.profileForm.patchValue({
@@ -45,7 +44,7 @@ export class FormComponent {
   }
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.profileForm.value);
+    const jsonString = JSON.stringify(this.profileForm.value);
+    alert(jsonString);
   }
 }

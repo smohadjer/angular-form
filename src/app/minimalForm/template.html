@@ -1,0 +1,14 @@
+<div class="flex">
+  <form [formGroup]="myForm" (ngSubmit)="submitHandler()">
+    <h1>Minimal Reactive Form</h1>
+    <div>
+      <label for="firstname">First name:</label>
+      <input type="text" formControlName="firstname">
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  <div class="status">
+    <p>Form Value: {{ myForm.value | json }}</p>
+    <button (click)="updateName()">Set Name</button>
+  </div>
+</div>
