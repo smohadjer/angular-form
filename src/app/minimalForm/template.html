@@ -14,7 +14,7 @@
       <div>
         <label>State:</label>
         <select formControlName="state">
-          <option value="">Select your state</option>
+          <option selected value="null">Select your state</option>
           <option *ngFor="let state of states" [ngValue]="state.abbrev">
             {{ state.name }}
           </option>
@@ -49,6 +49,7 @@
   </form>
   <div class="status">
     <p>Form Value:<br> {{ myForm.value | json }}</p>
-    <button (click)="populateForm()">Populate Form</button>
+    <button (click)="populateForm()">Populate Form</button> &nbsp;
+    <button (click)="resetForm()">Reset Form</button>
   </div>
 </div>

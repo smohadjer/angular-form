@@ -39,7 +39,7 @@ export class MinimalFormComponent {
       privacy: new FormControl(false),
       address: new FormGroup({
         street: new FormControl(''),
-        state: new FormControl(''),
+        state: new FormControl(null),
       }),
       interests: new FormArray([])
     });
@@ -88,6 +88,10 @@ export class MinimalFormComponent {
         state: this.states[1].abbrev
       }
     });
+  }
+
+  resetForm() {
+    this.myForm.reset();
   }
 
   submitHandler() {
