@@ -1,18 +1,26 @@
 <div class="flex">
   <form [formGroup]="myForm" (ngSubmit)="submitHandler()">
     <h1>Minimal Reactive Form</h1>
+    <p>Shows how to use FormControl, FormGroup, FormArray, setValue() and patchValue() methods, subscribe to valueChanges, and how to connect input, select, radio, and checkbox elements to form model.</p>
     <div>
       <label>First name:</label>
       <input type="text" formControlName="firstname">
     </div>
-    <div>
-      <label>State:</label>
-      <select formControlName="state">
-        <option *ngFor="let state of states" [ngValue]="state.abbrev">
-          {{ state.name }}
-        </option>
-      </select>
-    </div>
+    <fieldset formGroupName="address">
+      <div>
+        <label>Street:</label>
+        <input type="text" formControlName="street">
+      </div>
+      <div>
+        <label>State:</label>
+        <select formControlName="state">
+          <option value="">Select your state</option>
+          <option *ngFor="let state of states" [ngValue]="state.abbrev">
+            {{ state.name }}
+          </option>
+        </select>
+      </div>
+    </fieldset>
     <div>
       <label>Sex:</label>
       <span>
@@ -36,11 +44,11 @@
         <label for="privacy">I agree</label>
       </span>
     </div>
-
+    <br>
     <button type="submit">Submit</button>
   </form>
   <div class="status">
-    <p>Form Value: {{ myForm.value | json }}</p>
+    <p>Form Value:<br> {{ myForm.value | json }}</p>
     <button (click)="populateForm()">Populate Form</button>
   </div>
 </div>

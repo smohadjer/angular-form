@@ -11,10 +11,9 @@ import { RouterModule } from '@angular/router';
     <aside>
       <h2>Reactive form examples</h2>
       <ul>
-        <li><a routerLink='/'>Minimal</a></li>
-        <li><a routerLink='/formbuilder'>built with FormBuilder</a></li>
-        <li><a routerLink='/validation'>with validation</a></li>
-
+        <li><a routerLink='/'>Minimal reactive form</a></li>
+        <li><a routerLink='/formbuilder'>Using FormBuilder</a></li>
+        <li><a routerLink='/validation'>Form with validation</a></li>
       </ul>
     </aside>
     <main>
