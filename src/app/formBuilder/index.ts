@@ -11,7 +11,7 @@ import { JsonPipe, NgFor } from '@angular/common';
 })
 
 export class FormBuilderComponent {
-  profileForm = this.formBuilder.group({
+  myForm = this.formBuilder.group({
     firstName: [''],
     address: this.formBuilder.group({
       street: [''],
@@ -23,15 +23,15 @@ export class FormBuilderComponent {
   });
 
   get aliases() {
-    return this.profileForm.get('aliases') as FormArray;
+    return this.myForm.get('aliases') as FormArray;
   }
 
   constructor(private formBuilder: FormBuilder) {
 
   }
 
-  updateProfile() {
-    this.profileForm.patchValue({
+  updateForm() {
+    this.myForm.patchValue({
       firstName: 'Nancy',
       address: {
         street: '123 Drew Street',
@@ -44,7 +44,7 @@ export class FormBuilderComponent {
   }
 
   onSubmit() {
-    const jsonString = JSON.stringify(this.profileForm.value);
+    const jsonString = JSON.stringify(this.myForm.value);
     alert(jsonString);
   }
 }

@@ -2,7 +2,7 @@ form {
   padding-top: 1rem;
 }
 
-label {
+label:first-child {
   display: block;
   margin: .5em 0;
   font-weight: bold;
@@ -25,4 +25,8 @@ label {
 .status {
   border: solid 1px;
   padding: 1em;
+}
+
+input[type="checkbox"] {
+  vertical-align: text-bottom;
 }

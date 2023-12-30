@@ -2,13 +2,45 @@
   <form [formGroup]="myForm" (ngSubmit)="submitHandler()">
     <h1>Minimal Reactive Form</h1>
     <div>
-      <label for="firstname">First name:</label>
+      <label>First name:</label>
       <input type="text" formControlName="firstname">
     </div>
+    <div>
+      <label>State:</label>
+      <select formControlName="state">
+        <option *ngFor="let state of states" [ngValue]="state.abbrev">
+          {{ state.name }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <label>Sex:</label>
+      <span>
+        <input id="male" type="radio" value="male" formControlName="sex"><label for="male">Male</label>
+        <input id="female" type="radio" value="female" formControlName="sex"><label for="female">Female</label>
+      </span>
+    </div>
+
+    <div>
+      <label>Interests:</label>
+      <span formArrayName="interests" *ngFor="let int of interestsFormArray.controls; let i = index">
+        <input id="_{{i}}" type="checkbox" [formControlName]="i">
+        <label for="_{{i}}">{{interests[i]}}</label> &nbsp;
+      </span>
+    </div>
+
+    <div>
+      <label>Privacy Policy:</label>
+      <span>
+        <input id="privacy" type="checkbox" formControlName="privacy" />
+        <label for="privacy">I agree</label>
+      </span>
+    </div>
+
     <button type="submit">Submit</button>
   </form>
   <div class="status">
     <p>Form Value: {{ myForm.value | json }}</p>
-    <button (click)="updateName()">Set Name</button>
+    <button (click)="populateForm()">Populate Form</button>
   </div>
 </div>
