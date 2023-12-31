@@ -41,7 +41,8 @@ export class MinimalFormComponent {
         street: new FormControl(''),
         state: new FormControl(null),
       }),
-      interests: new FormArray([])
+      interests: new FormArray([]),
+      comments: new FormControl()
     });
 
     // add checkboxes to interests FormArray
@@ -86,7 +87,8 @@ export class MinimalFormComponent {
       address: {
         street: 'Buchenstr. 1',
         state: this.states[1].abbrev
-      }
+      },
+      comments: 'I have no comments!'
     });
   }
 
@@ -98,7 +100,15 @@ export class MinimalFormComponent {
     // const selectedInterests = this.myForm.value.interests.map((checked: boolean, i:number) => checked ? this.interests[i] : null).filter(v => v !== null);
     // console.log(selectedInterests);
 
-    alert(JSON.stringify(this.myForm.value));
+    fetch('api/form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.myForm.value)
+    })
+    .then(response => response.json())
+    .then(json => alert(JSON.stringify(json)));
   }
 }
 
