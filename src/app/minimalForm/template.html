@@ -1,16 +1,17 @@
 <h3>Angular 17 Reactive Form Demo</h3>
-<div>
+<div class="status">
   <p>{{ myForm.value | json }}</p>
   <button (click)="populateForm()">Populate Form</button> &nbsp;
   <button (click)="resetForm()">Reset Form</button>
 </div>
-<br>
-<hr>
+
 <form [formGroup]="myForm" (ngSubmit)="submitHandler()">
-  <div>
-    <label>First name: *</label>
-    <input type="text" formControlName="firstName" required>
-  </div>
+  <fieldset class="noborder">
+    <div>
+      <label>First name: *</label>
+      <input type="text" formControlName="firstName" required>
+    </div>
+  </fieldset>
   <fieldset formGroupName="address">
     <legend>Address</legend>
     <div>
@@ -26,41 +27,48 @@
         </option>
       </select>
     </div>
+  </fieldset>
+  <fieldset>
+    <legend>Phones</legend>
+    <button (click)="addPhone()" type="button">Add Phone</button>
     <div formArrayName="phones">
-      <div *ngFor="let phone of myForm.controls.address.controls.phones.controls; index as i">
+      <div *ngFor="let phone of myForm.controls.phones.controls; index as i" [formGroupName]="i">
         <label for="phone-{{i}}">Phone:</label>
-        <input type="text" [formControlName]="i" placeholder="Add phone number" id="phone-{{i}}"> &nbsp;
+        <select formControlName="label">
+          <option *ngFor="let label of phoneLabels" [value]="label">{{label}}</option>
+        </select> &nbsp;
+        <input type="text" formControlName="number" placeholder="Add phone number" id="phone-{{i}}"> &nbsp;
         <button (click)="removePhone(i)" type="button">Remove</button>
       </div>
-      <button (click)="addPhone()" type="button">Add Phone</button>
     </div>
   </fieldset>
-  <div>
-    <label>Sex:</label>
-    <span>
-      <input id="male" type="radio" value="male" formControlName="sex"><label for="male">Male</label>
-      <input id="female" type="radio" value="female" formControlName="sex"><label for="female">Female</label>
-    </span>
-  </div>
-  <div formArrayName="interests">
-    <label>Interests:</label>
-    <span *ngFor="let int of interestsFormArray.controls; let i = index">
-      <input id="_{{i}}" type="checkbox" [formControlName]="i">
-      <label for="_{{i}}">{{interests[i]}}</label> &nbsp;
-    </span>
-  </div>
-  <div>
-    <label>Comments:</label>
-    <textarea placeholder="add comments here..." cols="30" rows="5" formControlName="comments"></textarea>
-  </div>
-  <div>
-    <label>Privacy Policy:</label>
-    <span>
-      <input id="privacy" type="checkbox" formControlName="privacy" />
-      <label for="privacy">I agree</label>
-    </span>
-  </div>
-  <br>
+  <fieldset class="noborder">
+    <div>
+      <label>Sex:</label>
+      <span>
+        <input id="male" type="radio" value="male" formControlName="sex"><label for="male">Male</label>
+        <input id="female" type="radio" value="female" formControlName="sex"><label for="female">Female</label>
+      </span>
+    </div>
+    <div formArrayName="interests">
+      <label>Interests:</label>
+      <span *ngFor="let int of interestsFormArray.controls; let i = index">
+        <input id="_{{i}}" type="checkbox" [formControlName]="i">
+        <label for="_{{i}}">{{interests[i]}}</label> &nbsp;
+      </span>
+    </div>
+    <div>
+      <label>Comments:</label>
+      <textarea placeholder="add comments here..." cols="30" rows="5" formControlName="comments"></textarea>
+    </div>
+    <div>
+      <label>Privacy Policy:</label>
+      <span>
+        <input id="privacy" type="checkbox" formControlName="privacy" />
+        <label for="privacy">I agree</label>
+      </span>
+    </div>
+  </fieldset>
   <button type="submit" [disabled]="!myForm.valid">Submit</button>
 </form>
 

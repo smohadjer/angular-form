@@ -13,6 +13,24 @@ input[type="checkbox"] {
   vertical-align: text-bottom;
 }
 
+button[type="submit"] {
+  padding: 0.5em 2em;
+  margin: 1em 0;
+  font-size: larger;
+}
+
 textarea {
   vertical-align: text-top;
+}
+
+.status {
+  background-color: #eee;
+  padding: 0.5em 1em 1.5em;
+  margin-bottom: 1em;
+}
+
+fieldset {
+  border-radius: 10px;
+  border: solid 1px #ccc;
+  margin-top: 1em;
 }

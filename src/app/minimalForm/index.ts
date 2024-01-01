@@ -19,23 +19,7 @@ import {
 })
 
 export class MinimalFormComponent implements OnInit {
-  myForm = new FormGroup({
-    firstName: new FormControl('', Validators.required),
-    sex: new FormControl(''),
-    privacy: new FormControl(false),
-    address: new FormGroup({
-      street: new FormControl(''),
-      state: new FormControl(''),
-      phones: new FormArray([
-        new FormControl('')
-      ])
-    }),
-    interests: new FormArray([
-      new FormControl(false)
-    ]),
-    comments: new FormControl()
-  });
-
+  phoneLabels = ['Mobile', 'Work', 'Home'];
   states = [
     {name: 'Arizona', abbrev: 'AZ'},
     {name: 'California', abbrev: 'CA'},
@@ -43,12 +27,31 @@ export class MinimalFormComponent implements OnInit {
     {name: 'New York', abbrev: 'NY'},
     {name: 'Pennsylvania', abbrev: 'PA'},
   ];
-
   interests = [
-    'chess',
-    'tennis',
-    'poker'
-  ]
+    'Chess',
+    'Tennis',
+    'Poker'
+  ];
+  myModel = {
+    firstName: new FormControl('', Validators.required),
+    sex: new FormControl(''),
+    privacy: new FormControl(false),
+    address: new FormGroup({
+      street: new FormControl(''),
+      state: new FormControl(),
+    }),
+    phones: new FormArray([
+      new FormGroup({
+        label: new FormControl(this.phoneLabels[0]),
+        number: new FormControl('')
+      })
+    ]),
+    interests: new FormArray([
+      new FormControl(false)
+    ]),
+    comments: new FormControl()
+  };
+  myForm = new FormGroup(this.myModel);
 
   ngOnInit(): void {
     console.log('init');
@@ -65,10 +68,10 @@ export class MinimalFormComponent implements OnInit {
     this.myForm.controls['sex'].setValue('male');
 
     // we can access form fields in this way
-   // const street = this.myForm.value.address.street;
-    const myState = this.myForm.get('address.state')!.value;
-    const rawValues = this.myForm.getRawValue();
-    //console.log(street, myState, rawValues);
+    // const street = this.myForm.value.address.street;
+    // const myState = this.myForm.get('address.state')!.value;
+    // const rawValues = this.myForm.getRawValue();
+    // console.log(street, myState, rawValues);
 
     // subscribe to value changes on form or individual fields
     this.myForm.valueChanges.subscribe((value)=>{
@@ -78,11 +81,14 @@ export class MinimalFormComponent implements OnInit {
   }
 
   addPhone() {
-    this.myForm.controls.address.controls.phones.push(new FormControl(''));
+    this.myForm.controls.phones.push(new FormGroup({
+      label: new FormControl(this.phoneLabels[0]),
+      number: new FormControl()
+    }));
   }
 
   removePhone(index: number) {
-    this.myForm.controls.address.controls.phones.removeAt(index);
+    this.myForm.controls.phones.removeAt(index);
   }
 
   get interestsFormArray() {
@@ -106,9 +112,6 @@ export class MinimalFormComponent implements OnInit {
       address: {
         street: 'Buchenstr. 1',
         state: this.states[1].abbrev,
-        phones: [
-          '123456789'
-        ]
       },
       comments: 'I have no comments!'
     });
@@ -116,11 +119,23 @@ export class MinimalFormComponent implements OnInit {
 
   resetForm() {
     this.myForm.reset();
+
+    // since reset set label of phone field to null, we do the following
+    // trick so that label is set to default value
+    this.myForm.controls.phones.clear();
+    this.myForm.controls.phones.push(
+      new FormGroup({
+        label: new FormControl(this.phoneLabels[0]),
+        number: new FormControl('')
+      })
+    );
   }
 
   submitHandler() {
     // const selectedInterests = this.myForm.value.interests.map((checked: boolean, i:number) => checked ? this.interests[i] : null).filter(v => v !== null);
     // console.log(selectedInterests);
+
+    console.log(this.myForm.value);
 
     fetch('api/form', {
       method: 'POST',
