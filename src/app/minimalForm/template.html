@@ -7,12 +7,7 @@
 </div>
 
 <form [formGroup]="myForm" (ngSubmit)="submitHandler()">
-  <fieldset class="noborder">
-    <div>
-      <label>First name: *</label>
-      <input type="text" formControlName="firstName" required>
-    </div>
-  </fieldset>
+  <app-test-input [childForm]="myForm"></app-test-input>
   <fieldset formGroupName="address">
     <legend>Address</legend>
     <div>

@@ -5,15 +5,16 @@ import {
   FormGroup,
   FormArray,
   ReactiveFormsModule,
-  Validators
 } from '@angular/forms';
+
+import { TestInputComponent } from '../test-input/test-input.component';
 
 @Component({
   standalone: true,
   selector: 'minimal-form',
   templateUrl: './template.html',
   imports: [
-    ReactiveFormsModule, JsonPipe, NgFor
+    ReactiveFormsModule, JsonPipe, NgFor, TestInputComponent
   ],
   styleUrls: ['./style.css']
 })
@@ -33,7 +34,7 @@ export class MinimalFormComponent implements OnInit {
     'Poker'
   ];
   myModel = {
-    firstName: new FormControl('', Validators.required),
+    firstName: TestInputComponent.addTestInput(),
     sex: new FormControl(''),
     privacy: new FormControl(false),
     address: new FormGroup({
@@ -51,13 +52,13 @@ export class MinimalFormComponent implements OnInit {
     ]),
     comments: new FormControl()
   };
-  myForm = new FormGroup(this.myModel);
-
-  ngOnInit(): void {
-    console.log('init');
-  }
+  myForm;
 
   constructor() {
+    this.myForm = new FormGroup(this.myModel);
+  }
+
+  ngOnInit(): void {
     // add checkboxes to interests FormArray
     this.interestsFormArray.clear();
     this.interests.forEach(() => {
@@ -92,7 +93,7 @@ export class MinimalFormComponent implements OnInit {
   }
 
   get interestsFormArray() {
-    return this.myForm.controls.interests;
+    return this.myForm.controls.interests as FormArray;
   }
 
   setAllInterestsToTrue() {
