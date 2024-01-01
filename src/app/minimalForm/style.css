@@ -16,7 +16,6 @@ input[type="checkbox"] {
 button[type="submit"] {
   padding: 0.5em 2em;
   margin: 1em 0;
-  font-size: larger;
 }
 
 textarea {

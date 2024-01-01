@@ -1,6 +1,7 @@
-<h3>Angular 17 Reactive Form Demo</h3>
+<h3>Angular 17 Reactive Form</h3>
 <div class="status">
-  <p>{{ myForm.value | json }}</p>
+  <p><code>{{ myForm.value | json }}</code></p>
+  <p>Status: {{ myForm.status | json }}</p>
   <button (click)="populateForm()">Populate Form</button> &nbsp;
   <button (click)="resetForm()">Reset Form</button>
 </div>
