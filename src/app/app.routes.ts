@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 import { MinimalFormComponent } from './minimalForm';
 import { FormBuilderComponent } from './formBuilder';
-import { ValidationFormComponent } from './validationForm';
 
 export const routes: Routes = [
   {
@@ -14,11 +13,6 @@ export const routes: Routes = [
     path: 'formbuilder',
     component: FormBuilderComponent,
     title: 'FormBuilder'
-  },
-  {
-    path: 'validation',
-    component: ValidationFormComponent,
-    title: 'Validation'
   }
 ];
 

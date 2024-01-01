@@ -1,60 +1,67 @@
-<div class="flex">
-  <form [formGroup]="myForm" (ngSubmit)="submitHandler()">
-    <h1>Minimal Reactive Form</h1>
-    <p>Shows how to use FormControl, FormGroup, FormArray, setValue() and patchValue() methods, subscribe to valueChanges, and how to connect input, select, radio, and checkbox elements to form model.</p>
-    <div>
-      <label>First name:</label>
-      <input type="text" formControlName="firstname">
-    </div>
-    <fieldset formGroupName="address">
-      <div>
-        <label>Street:</label>
-        <input type="text" formControlName="street">
-      </div>
-      <div>
-        <label>State:</label>
-        <select formControlName="state">
-          <option selected value="null">Select your state</option>
-          <option *ngFor="let state of states" [ngValue]="state.abbrev">
-            {{ state.name }}
-          </option>
-        </select>
-      </div>
-    </fieldset>
-    <div>
-      <label>Sex:</label>
-      <span>
-        <input id="male" type="radio" value="male" formControlName="sex"><label for="male">Male</label>
-        <input id="female" type="radio" value="female" formControlName="sex"><label for="female">Female</label>
-      </span>
-    </div>
-
-    <div>
-      <label>Interests:</label>
-      <span formArrayName="interests" *ngFor="let int of interestsFormArray.controls; let i = index">
-        <input id="_{{i}}" type="checkbox" [formControlName]="i">
-        <label for="_{{i}}">{{interests[i]}}</label> &nbsp;
-      </span>
-    </div>
-
-    <div>
-      <label>Comments:</label>
-      <textarea placeholder="add comments here..." cols="30" rows="5" formControlName="comments"></textarea>
-    </div>
-
-    <div>
-      <label>Privacy Policy:</label>
-      <span>
-        <input id="privacy" type="checkbox" formControlName="privacy" />
-        <label for="privacy">I agree</label>
-      </span>
-    </div>
-    <br>
-    <button type="submit">Submit</button>
-  </form>
-  <div class="status">
-    <p>Form Value:<br> {{ myForm.value | json }}</p>
-    <button (click)="populateForm()">Populate Form</button> &nbsp;
-    <button (click)="resetForm()">Reset Form</button>
-  </div>
+<h3>Angular 17 Reactive Form Demo</h3>
+<div>
+  <p>{{ myForm.value | json }}</p>
+  <button (click)="populateForm()">Populate Form</button> &nbsp;
+  <button (click)="resetForm()">Reset Form</button>
 </div>
+<br>
+<hr>
+<form [formGroup]="myForm" (ngSubmit)="submitHandler()">
+  <div>
+    <label>First name: *</label>
+    <input type="text" formControlName="firstName" required>
+  </div>
+  <fieldset formGroupName="address">
+    <legend>Address</legend>
+    <div>
+      <label>Street:</label>
+      <input type="text" formControlName="street">
+    </div>
+    <div>
+      <label>State:</label>
+      <select formControlName="state">
+        <option selected value="null">Select your state</option>
+        <option *ngFor="let state of states" [ngValue]="state.abbrev">
+          {{ state.name }}
+        </option>
+      </select>
+    </div>
+    <div formArrayName="phones">
+      <div *ngFor="let phone of myForm.controls.address.controls.phones.controls; index as i">
+        <label for="phone-{{i}}">Phone:</label>
+        <input type="text" [formControlName]="i" placeholder="Add phone number" id="phone-{{i}}"> &nbsp;
+        <button (click)="removePhone(i)" type="button">Remove</button>
+      </div>
+      <button (click)="addPhone()" type="button">Add Phone</button>
+    </div>
+  </fieldset>
+  <div>
+    <label>Sex:</label>
+    <span>
+      <input id="male" type="radio" value="male" formControlName="sex"><label for="male">Male</label>
+      <input id="female" type="radio" value="female" formControlName="sex"><label for="female">Female</label>
+    </span>
+  </div>
+  <div formArrayName="interests">
+    <label>Interests:</label>
+    <span *ngFor="let int of interestsFormArray.controls; let i = index">
+      <input id="_{{i}}" type="checkbox" [formControlName]="i">
+      <label for="_{{i}}">{{interests[i]}}</label> &nbsp;
+    </span>
+  </div>
+  <div>
+    <label>Comments:</label>
+    <textarea placeholder="add comments here..." cols="30" rows="5" formControlName="comments"></textarea>
+  </div>
+  <div>
+    <label>Privacy Policy:</label>
+    <span>
+      <input id="privacy" type="checkbox" formControlName="privacy" />
+      <label for="privacy">I agree</label>
+    </span>
+  </div>
+  <br>
+  <button type="submit" [disabled]="!myForm.valid">Submit</button>
+</form>
+
+

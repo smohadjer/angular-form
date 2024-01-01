@@ -9,31 +9,8 @@ label:first-child {
   }
 }
 
-.flex {
-  display: flex;
-  gap: 1em;
-}
-
-.flex > * {
-  width: calc(50vw - 0.5em);
-}
-
-.status {
-  border: solid 1px;
-  padding: 1em;
-}
-
 input[type="checkbox"] {
   vertical-align: text-bottom;
-}
-
-h1 {
-  margin-top: 0;
-}
-
-fieldset {
-  border: 0;
-  padding: 0;
 }
 
 textarea {

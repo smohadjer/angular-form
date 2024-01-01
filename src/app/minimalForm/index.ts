@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { JsonPipe, NgFor } from '@angular/common';
 import {
   FormControl,
   FormGroup,
   FormArray,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
 
 @Component({
@@ -17,8 +18,24 @@ import {
   styleUrls: ['./style.css']
 })
 
-export class MinimalFormComponent {
-  myForm: FormGroup;
+export class MinimalFormComponent implements OnInit {
+  myForm = new FormGroup({
+    firstName: new FormControl('', Validators.required),
+    sex: new FormControl(''),
+    privacy: new FormControl(false),
+    address: new FormGroup({
+      street: new FormControl(''),
+      state: new FormControl(''),
+      phones: new FormArray([
+        new FormControl('')
+      ])
+    }),
+    interests: new FormArray([
+      new FormControl(false)
+    ]),
+    comments: new FormControl()
+  });
+
   states = [
     {name: 'Arizona', abbrev: 'AZ'},
     {name: 'California', abbrev: 'CA'},
@@ -26,26 +43,20 @@ export class MinimalFormComponent {
     {name: 'New York', abbrev: 'NY'},
     {name: 'Pennsylvania', abbrev: 'PA'},
   ];
+
   interests = [
     'chess',
     'tennis',
     'poker'
   ]
 
-  constructor() {
-    this.myForm = new FormGroup({
-      firstname: new FormControl(''),
-      sex: new FormControl(''),
-      privacy: new FormControl(false),
-      address: new FormGroup({
-        street: new FormControl(''),
-        state: new FormControl(null),
-      }),
-      interests: new FormArray([]),
-      comments: new FormControl()
-    });
+  ngOnInit(): void {
+    console.log('init');
+  }
 
+  constructor() {
     // add checkboxes to interests FormArray
+    this.interestsFormArray.clear();
     this.interests.forEach(() => {
       this.interestsFormArray.push(new FormControl(false));
     });
@@ -54,10 +65,10 @@ export class MinimalFormComponent {
     this.myForm.controls['sex'].setValue('male');
 
     // we can access form fields in this way
-    const street = this.myForm.value.address.street;
+   // const street = this.myForm.value.address.street;
     const myState = this.myForm.get('address.state')!.value;
     const rawValues = this.myForm.getRawValue();
-    console.log(street, myState, rawValues);
+    //console.log(street, myState, rawValues);
 
     // subscribe to value changes on form or individual fields
     this.myForm.valueChanges.subscribe((value)=>{
@@ -66,8 +77,16 @@ export class MinimalFormComponent {
     this.myForm.controls['sex'].valueChanges.subscribe(value => console.log(value));
   }
 
+  addPhone() {
+    this.myForm.controls.address.controls.phones.push(new FormControl(''));
+  }
+
+  removePhone(index: number) {
+    this.myForm.controls.address.controls.phones.removeAt(index);
+  }
+
   get interestsFormArray() {
-    return this.myForm.controls['interests'] as FormArray;
+    return this.myForm.controls.interests;
   }
 
   setAllInterestsToTrue() {
@@ -81,12 +100,15 @@ export class MinimalFormComponent {
     this.setAllInterestsToTrue();
 
     this.myForm.patchValue({
-      firstname: 'Saeid',
+      firstName: 'Saeid',
       sex: 'male',
       privacy: true,
       address: {
         street: 'Buchenstr. 1',
-        state: this.states[1].abbrev
+        state: this.states[1].abbrev,
+        phones: [
+          '123456789'
+        ]
       },
       comments: 'I have no comments!'
     });
