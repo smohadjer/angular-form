@@ -19,7 +19,7 @@ import {
 })
 
 export class PhoneComponent {
-  @Input() formGroup!: FormGroup;
+  @Input() myGroup!: FormGroup;
   @Input() required: boolean = false;
   @Input() index: number = -1;
 
@@ -38,7 +38,7 @@ export class PhoneComponent {
   constructor() {}
 
   removePhone(index: number) {
-    const optionalPhones = this.formGroup.parent as FormArray;
+    const optionalPhones = this.myGroup.parent as FormArray;
     optionalPhones.removeAt(index);
   }
 }

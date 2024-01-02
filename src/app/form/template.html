@@ -12,35 +12,27 @@
       <label>First name: *</label>
       <input type="text" formControlName="firstName" required>
     </div>
+    <div>
+      <label>Last name: *</label>
+      <input type="text" formControlName="lastName" required>
+    </div>
   </fieldset>
 
   <fieldset formGroupName="address">
     <legend>Address</legend>
-    <div>
-      <label>Street:</label>
-      <input type="text" formControlName="street">
-    </div>
-    <div>
-      <label>State:</label>
-      <select formControlName="state">
-        <option selected value="null">Select your state</option>
-        <option *ngFor="let state of states" [ngValue]="state.abbrev">
-          {{ state.name }}
-        </option>
-      </select>
-    </div>
+    <app-address [myGroup]="address"></app-address>
   </fieldset>
 
   <fieldset>
     <legend>Phones</legend>
     <!-- example of a required phone field -->
-    <app-phone [formGroup]="phone" [required]="true"></app-phone>
+    <app-phone [myGroup]="phone" [required]="true"></app-phone>
     <br>
     <button (click)="addPhone()" type="button">Add Phone</button>
     <!-- example of optional phone fields -->
     <div formArrayName="optionalPhones">
       <div *ngFor="let phone of optionalPhones.controls; index as i">
-          <app-phone [index]="i" [formGroup]="phone"></app-phone>
+          <app-phone [index]="i" [myGroup]="phone"></app-phone>
       </div>
     </div>
   </fieldset>

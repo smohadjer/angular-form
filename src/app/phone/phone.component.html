@@ -1,4 +1,4 @@
-<ng-container [formGroup]="formGroup">
+<ng-container [formGroup]="myGroup">
   <label>Phone: <span *ngIf="required">*</span></label>
   <select formControlName="label">
     <option *ngFor="let label of phoneLabels" [value]="label">{{label}}</option>

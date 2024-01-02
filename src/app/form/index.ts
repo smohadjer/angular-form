@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 
 import { PhoneComponent } from '../phone/phone.component';
+import { AddressComponent } from '../address/address.component';
 
 @Component({
   standalone: true,
@@ -18,30 +19,22 @@ import { PhoneComponent } from '../phone/phone.component';
     ReactiveFormsModule,
     JsonPipe,
     NgFor,
-    PhoneComponent
+    PhoneComponent,
+    AddressComponent
   ],
   styleUrls: ['./style.css']
 })
 
 export class FormComponent implements OnInit {
-  states = [
-    {name: 'Arizona', abbrev: 'AZ'},
-    {name: 'California', abbrev: 'CA'},
-    {name: 'Colorado', abbrev: 'CO'},
-    {name: 'New York', abbrev: 'NY'},
-    {name: 'Pennsylvania', abbrev: 'PA'},
-  ];
   interestsList = ['Chess', 'Tennis', 'Poker'];
   formModel = {
     firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
     gender: new FormControl(''),
     privacy: new FormControl(false),
-    address: new FormGroup({
-      street: new FormControl(''),
-      state: new FormControl(),
-    }),
+    address: AddressComponent.getControls(),
     phone: PhoneComponent.getControls(true),
-    // optionalPhones array gets populated by invoking addPhone() method
+    // optionalPhones gets populated via addPhone() method
     optionalPhones: new FormArray<FormGroup>([]),
     interests: new FormArray<FormControl>([]),
     comments: new FormControl()
@@ -54,6 +47,10 @@ export class FormComponent implements OnInit {
 
   get phone() {
     return this.myForm.controls.phone;
+  }
+
+  get address() {
+    return this.myForm.controls.address;
   }
 
   get optionalPhones() {
@@ -92,14 +89,16 @@ export class FormComponent implements OnInit {
       item.setValue(true);
     });
 
+    this.address.setValue({
+      street: 'Hamilton 123',
+      state: 'NY'
+    })
+
     this.myForm.patchValue({
-      firstName: 'Saeid',
+      firstName: 'John',
+      lastName: 'Smith',
       gender: 'male',
       privacy: true,
-      address: {
-        street: 'Buchenstr. 1',
-        state: this.states[1].abbrev,
-      },
       phone: {
         label: 'Work',
         number: 123456789
@@ -110,11 +109,11 @@ export class FormComponent implements OnInit {
 
   resetForm() {
     this.myForm.reset();
-    this.myForm.get('phone')?.setValue({
+    this.phone.setValue({
       label: 'Mobile',
       number: null
     });
-    this.myForm.controls.optionalPhones.clear();
+    this.optionalPhones.clear();
   }
 
   addPhone() {
@@ -122,7 +121,7 @@ export class FormComponent implements OnInit {
   }
 
   submitHandler() {
-    console.log(this.myForm.value);
+    //console.log(this.myForm.value);
 
     fetch('api/form', {
       method: 'POST',
