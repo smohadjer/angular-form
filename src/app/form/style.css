@@ -33,3 +33,9 @@ fieldset {
   border: solid 1px #ccc;
   margin-top: 1em;
 }
+
+fieldset.noborder {
+  border-color: white;
+  padding-top: 0;
+  padding-bottom: 0;
+}

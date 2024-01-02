@@ -7,7 +7,12 @@
 </div>
 
 <form [formGroup]="myForm" (ngSubmit)="submitHandler()">
-  <app-test-input [childForm]="myForm"></app-test-input>
+  <fieldset class="noborder">
+    <div>
+      <label>First name: *</label>
+      <input type="text" formControlName="firstName" required>
+    </div>
+  </fieldset>
   <fieldset formGroupName="address">
     <legend>Address</legend>
     <div>
@@ -26,23 +31,13 @@
   </fieldset>
   <fieldset>
     <legend>Phones</legend>
-    <button (click)="addPhone()" type="button">Add Phone</button>
-    <div formArrayName="phones">
-      <div *ngFor="let phone of myForm.controls.phones.controls; index as i" [formGroupName]="i">
-        <label for="phone-{{i}}">Phone:</label>
-        <select formControlName="label">
-          <option *ngFor="let label of phoneLabels" [value]="label">{{label}}</option>
-        </select> &nbsp;
-        <input type="text" formControlName="number" placeholder="Add phone number" id="phone-{{i}}"> &nbsp;
-        <button (click)="removePhone(i)" type="button">Remove</button>
-      </div>
-    </div>
+    <app-phone [form]="myForm"></app-phone>
   </fieldset>
   <fieldset class="noborder">
     <div>
       <label>Sex:</label>
       <span>
-        <input id="male" type="radio" value="male" formControlName="sex"><label for="male">Male</label>
+        <input id="male" type="radio" value="male" formControlName="sex"><label for="male">Male</label>  &nbsp;
         <input id="female" type="radio" value="female" formControlName="sex"><label for="female">Female</label>
       </span>
     </div>

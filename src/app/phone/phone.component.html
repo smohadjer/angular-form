@@ -1,0 +1,14 @@
+<ng-container [formGroup]="form">
+  <button (click)="addPhone()" type="button">Add Phone</button>
+  <div formArrayName="phones">
+    <div *ngFor="let phone of phones.controls; index as i" [formGroupName]="i">
+      <label for="phone-{{i}}">Phone:</label>
+      <select formControlName="label">
+        <option *ngFor="let label of phoneLabels" [value]="label">{{label}}</option>
+      </select> &nbsp;
+      <input type="text" formControlName="number" placeholder="Add phone number" id="phone-{{i}}"> &nbsp;
+      <button (click)="removePhone(i)" type="button">Remove</button>
+    </div>
+  </div>
+</ng-container>
+

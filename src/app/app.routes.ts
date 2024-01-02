@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 
-import { MinimalFormComponent } from './minimalForm';
+import { FormComponent } from './form';
 
 export const routes: Routes = [
   {
     path: '',
-    component: MinimalFormComponent,
-    title: 'Minimal Form'
+    component: FormComponent,
+    title: 'Reactive Form'
   },
 ];
 
