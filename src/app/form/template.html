@@ -47,17 +47,17 @@
 
   <fieldset>
     <div>
-      <label>Sex:</label>
+      <label>Gender:</label>
       <span>
-        <input id="male" type="radio" value="male" formControlName="sex"><label for="male">Male</label>  &nbsp;
-        <input id="female" type="radio" value="female" formControlName="sex"><label for="female">Female</label>
+        <input id="male" type="radio" value="male" formControlName="gender"><label for="male">Male</label>  &nbsp;
+        <input id="female" type="radio" value="female" formControlName="gender"><label for="female">Female</label>
       </span>
     </div>
     <div formArrayName="interests">
       <label>Interests:</label>
-      <span *ngFor="let int of interestsFormArray.controls; let i = index">
+      <span *ngFor="let int of interests.controls; let i = index">
         <input id="_{{i}}" type="checkbox" [formControlName]="i">
-        <label for="_{{i}}">{{interests[i]}}</label> &nbsp;
+        <label for="_{{i}}">{{interestsList[i]}}</label> &nbsp;
       </span>
     </div>
     <div>

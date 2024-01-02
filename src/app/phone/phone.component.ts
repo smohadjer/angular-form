@@ -26,7 +26,7 @@ export class PhoneComponent {
   // used in template to populate label dropdown
   phoneLabels = ['Mobile', 'Work', 'Home'];
 
-  static getControls(required: boolean): FormGroup {
+  static getControls(required?: boolean): FormGroup {
     return new FormGroup({
         // we use Mobile as default label for phone
         label: new FormControl('Mobile'),

@@ -12,7 +12,7 @@ import { PhoneComponent } from '../phone/phone.component';
 
 @Component({
   standalone: true,
-  selector: 'minimal-form',
+  selector: 'reactive-form',
   templateUrl: './template.html',
   imports: [
     ReactiveFormsModule,
@@ -31,26 +31,25 @@ export class FormComponent implements OnInit {
     {name: 'New York', abbrev: 'NY'},
     {name: 'Pennsylvania', abbrev: 'PA'},
   ];
-  interests = ['Chess', 'Tennis', 'Poker'];
-  myModel = {
+  interestsList = ['Chess', 'Tennis', 'Poker'];
+  formModel = {
     firstName: new FormControl('', Validators.required),
-    sex: new FormControl(''),
+    gender: new FormControl(''),
     privacy: new FormControl(false),
     address: new FormGroup({
       street: new FormControl(''),
       state: new FormControl(),
     }),
     phone: PhoneComponent.getControls(true),
+    // optionalPhones array gets populated by invoking addPhone() method
     optionalPhones: new FormArray<FormGroup>([]),
-    interests: new FormArray([
-      new FormControl(false)
-    ]),
+    interests: new FormArray<FormControl>([]),
     comments: new FormControl()
   };
   myForm;
 
   constructor() {
-    this.myForm = new FormGroup(this.myModel);
+    this.myForm = new FormGroup(this.formModel);
   }
 
   get phone() {
@@ -61,45 +60,41 @@ export class FormComponent implements OnInit {
     return this.myForm.controls.optionalPhones;
   }
 
+  get interests() {
+    return this.myForm.controls.interests;
+  }
+
   ngOnInit(): void {
-    // add checkboxes to interests FormArray
-    this.interestsFormArray.clear();
-    this.interests.forEach(() => {
-      this.interestsFormArray.push(new FormControl(false));
+    // add interest controls to model
+    this.interestsList.forEach(() => {
+      this.interests.push(new FormControl(false));
     });
 
     // we can set values of form fields like this
-    this.myForm.controls['sex'].setValue('male');
+    this.myForm.controls['gender'].setValue('male');
 
     // we can access form fields in this way
-    const myState = this.myForm.get('address.state')!.value;
-    const rawValues = this.myForm.getRawValue();
+    // const myState = this.myForm.get('address.state')!.value;
+    // const rawValues = this.myForm.getRawValue();
     //console.log(myState, rawValues);
 
     // subscribe to value changes on form or individual fields
     this.myForm.valueChanges.subscribe((value)=>{
       console.log(value);
     });
-    this.myForm.controls['sex'].valueChanges.subscribe(value => console.log(value));
+    this.myForm.controls['gender'].valueChanges.subscribe(value => console.log(value));
   }
 
-  get interestsFormArray() {
-    return this.myForm.controls.interests as FormArray;
-  }
-
-  setAllInterestsToTrue() {
-    this.interestsFormArray.clear();
-    this.interests.forEach(() => {
-      this.interestsFormArray.push(new FormControl(true));
-    });
-  }
-
+  // to help with testing we use this fn to popuate the form
   populateForm() {
-    this.setAllInterestsToTrue();
+    // checks all interest checkboxes
+    this.interests.controls.forEach(item => {
+      item.setValue(true);
+    });
 
     this.myForm.patchValue({
       firstName: 'Saeid',
-      sex: 'male',
+      gender: 'male',
       privacy: true,
       address: {
         street: 'Buchenstr. 1',
@@ -123,7 +118,7 @@ export class FormComponent implements OnInit {
   }
 
   addPhone() {
-    this.myForm.controls.optionalPhones.push(PhoneComponent.getControls(false),);
+    this.optionalPhones.push(PhoneComponent.getControls(),);
   }
 
   submitHandler() {
