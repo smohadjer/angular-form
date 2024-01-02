@@ -1,18 +1,19 @@
 <h3>Angular 17 Reactive Form</h3>
 <div class="status">
   <p><code>{{ myForm.value | json }}</code></p>
-  <p>Status: {{ myForm.status | json }}</p>
+  <p>Status: {{ myForm.status | json }} &nbsp;
   <button (click)="populateForm()">Populate Form</button> &nbsp;
-  <button (click)="resetForm()">Reset Form</button>
+  <button (click)="resetForm()">Reset Form</button></p>
 </div>
 
 <form [formGroup]="myForm" (ngSubmit)="submitHandler()">
-  <fieldset class="noborder">
+  <fieldset>
     <div>
       <label>First name: *</label>
       <input type="text" formControlName="firstName" required>
     </div>
   </fieldset>
+
   <fieldset formGroupName="address">
     <legend>Address</legend>
     <div>
@@ -29,11 +30,22 @@
       </select>
     </div>
   </fieldset>
+
   <fieldset>
     <legend>Phones</legend>
-    <app-phone [form]="myForm"></app-phone>
+    <!-- example of a required phone field -->
+    <app-phone [formGroup]="myForm.controls.phone" [required]="true"></app-phone>
+    <br>
+    <button (click)="addPhone()" type="button">Add Phone</button>
+    <!-- example of optional phone fields -->
+    <div formArrayName="optionalPhones">
+      <div *ngFor="let phone of myForm.controls.optionalPhones.controls; index as i">
+          <app-phone [index]="i" [formGroup]="phone"></app-phone>
+      </div>
+    </div>
   </fieldset>
-  <fieldset class="noborder">
+
+  <fieldset>
     <div>
       <label>Sex:</label>
       <span>

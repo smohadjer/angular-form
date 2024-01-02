@@ -1,43 +1,44 @@
 import { Component, Input } from '@angular/core';
-import { JsonPipe, NgFor } from '@angular/common';
+import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import {
   FormControl,
   FormGroup,
   FormArray,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 
 @Component({
   selector: 'app-phone',
   standalone: true,
   imports: [
-    ReactiveFormsModule, JsonPipe, NgFor
+    ReactiveFormsModule, NgFor, NgIf
   ],
   templateUrl: './phone.component.html',
   styleUrl: './phone.component.css'
 })
-export class PhoneComponent {
-  @Input() form!: FormGroup;
 
+export class PhoneComponent {
+  @Input() formGroup!: FormGroup;
+  @Input() required: boolean = false;
+  @Input() index: number = -1;
+
+  // used in template to populate label dropdown
   phoneLabels = ['Mobile', 'Work', 'Home'];
 
-  static addControls(): FormGroup {
+  static getControls(required: boolean): FormGroup {
     return new FormGroup({
+        // we use Mobile as default label for phone
         label: new FormControl('Mobile'),
-        number: new FormControl('')
+        number: required ? new FormControl('', Validators.required)
+          : new FormControl('')
      });
   }
 
-  get phones() {
-    return this.form.controls.phones as FormArray;
-  }
+  constructor() {}
 
   removePhone(index: number) {
-    this.phones.removeAt(index);
-  }
-
-  addPhone() {
-    const phoneControls = PhoneComponent.addControls();
-    this.phones.push(phoneControls);
+    const optionalPhones = this.formGroup.parent as FormArray;
+    optionalPhones.removeAt(index);
   }
 }

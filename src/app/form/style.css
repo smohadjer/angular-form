@@ -13,8 +13,18 @@ input[type="checkbox"] {
   vertical-align: text-bottom;
 }
 
+button {
+  background-color:yellowgreen;
+  border: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+
+button[disabled] {
+  background: #ccc;
+}
+
 button[type="submit"] {
-  padding: 0.5em 2em;
   margin: 1em 0;
 }
 
@@ -24,14 +34,15 @@ textarea {
 
 .status {
   background-color: #eee;
-  padding: 0.5em 1em 1.5em;
-  margin-bottom: 1em;
+  padding: 0.5em 1em;
+  margin-bottom: 0.5em;
 }
 
 fieldset {
   border-radius: 10px;
   border: solid 1px #ccc;
   margin-top: 1em;
+  padding-bottom: 1em;
 }
 
 fieldset.noborder {

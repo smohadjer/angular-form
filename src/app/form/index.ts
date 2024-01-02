@@ -40,7 +40,8 @@ export class FormComponent implements OnInit {
       street: new FormControl(''),
       state: new FormControl(),
     }),
-    phones: new FormArray([]),
+    phone: PhoneComponent.getControls(true),
+    optionalPhones: new FormArray<FormGroup>([]),
     interests: new FormArray([
       new FormControl(false)
     ]),
@@ -65,7 +66,7 @@ export class FormComponent implements OnInit {
     // we can access form fields in this way
     const myState = this.myForm.get('address.state')!.value;
     const rawValues = this.myForm.getRawValue();
-    console.log(myState, rawValues);
+    //console.log(myState, rawValues);
 
     // subscribe to value changes on form or individual fields
     this.myForm.valueChanges.subscribe((value)=>{
@@ -102,7 +103,11 @@ export class FormComponent implements OnInit {
 
   resetForm() {
     this.myForm.reset();
-    this.myForm.controls.phones.clear();
+    this.myForm.controls.optionalPhones.clear();
+  }
+
+  addPhone() {
+    this.myForm.controls.optionalPhones.push(PhoneComponent.getControls(false),);
   }
 
   submitHandler() {
