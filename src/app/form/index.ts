@@ -53,6 +53,14 @@ export class FormComponent implements OnInit {
     this.myForm = new FormGroup(this.myModel);
   }
 
+  get phone() {
+    return this.myForm.controls.phone;
+  }
+
+  get optionalPhones() {
+    return this.myForm.controls.optionalPhones;
+  }
+
   ngOnInit(): void {
     // add checkboxes to interests FormArray
     this.interestsFormArray.clear();
@@ -97,12 +105,20 @@ export class FormComponent implements OnInit {
         street: 'Buchenstr. 1',
         state: this.states[1].abbrev,
       },
+      phone: {
+        label: 'Work',
+        number: 123456789
+      },
       comments: 'I have no comments!'
     });
   }
 
   resetForm() {
     this.myForm.reset();
+    this.myForm.get('phone')?.setValue({
+      label: 'Mobile',
+      number: null
+    });
     this.myForm.controls.optionalPhones.clear();
   }
 
