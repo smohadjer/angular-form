@@ -1,6 +1,9 @@
 # AngularForm
 
-https://ngform-saeid.vercel.app/
+- live https://ngform-saeid.vercel.app/
+- blog post: https://blog.saeidmohadjer.com/angular-reactive-form
+
+---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
 
