@@ -8,6 +8,7 @@ import {
   Validators
 } from '@angular/forms';
 
+import { DataService } from '../data.service';
 import { PhoneComponent } from '../phone/phone.component';
 import { AddressComponent } from '../address/address.component';
 
@@ -41,8 +42,17 @@ export class FormComponent implements OnInit {
   };
   myForm;
 
-  constructor() {
+  constructor(private dataService: DataService) {
     this.myForm = new FormGroup(this.formModel);
+    this.logger();
+  }
+
+  logger() {
+    const logData = {
+      value: JSON.stringify(this.myForm.value),
+      status:  JSON.stringify(this.myForm.status)
+    };
+    this.dataService.setData(logData);
   }
 
   get phone() {
@@ -77,7 +87,7 @@ export class FormComponent implements OnInit {
 
     // subscribe to value changes on form or individual fields
     this.myForm.valueChanges.subscribe((value)=>{
-      console.log(value);
+      this.logger();
     });
     this.myForm.controls['gender'].valueChanges.subscribe(value => console.log(value));
   }

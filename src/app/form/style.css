@@ -32,12 +32,6 @@ textarea {
   vertical-align: text-top;
 }
 
-.status {
-  background-color: #eee;
-  padding: 0.5em 1em;
-  margin-bottom: 0.5em;
-}
-
 fieldset {
   border-radius: 10px;
   border: solid 1px #ccc;

@@ -1,11 +1,8 @@
-<div class="status">
-  <p>Form values:<br><code>{{ myForm.value | json }}</code></p>
-  <p>Forom status: {{ myForm.status | json }}<br><br>
-  <button (click)="populateForm()">Populate Form</button> &nbsp;
-  <button (click)="resetForm()">Reset Form</button></p>
-</div>
-
 <form [formGroup]="myForm" (ngSubmit)="submitHandler()">
+  <div>
+    <button type="button" (click)="populateForm()">Populate Form</button> {{''}}
+    <button type="button" (click)="resetForm()">Reset Form</button>
+  </div>
   <fieldset>
     <div>
       <label>First name: *</label>
