@@ -13,8 +13,8 @@ import { DataService } from './data.service';
       <h1>Angular 17 Reactive Form</h1>
       <p><a href="https://github.com/smohadjer/angular-form">Code available on GitHub</a></p>
       <div class="status">
-        <p>Form values:<br><code>{{ log().value }}</code></p>
-        <p>Forom status: {{ log().status }}<br><br>
+        <p>Form values:<br><code>{{ data().value }}</code></p>
+        <p>Forom status: {{ data().status }}<br><br>
       </div>
       <router-outlet></router-outlet>
     </main>
@@ -23,9 +23,9 @@ import { DataService } from './data.service';
 })
 
 export class AppComponent {
-  log() {
-    return this.dataService.getData();
-  }
+  data;
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) {
+    this.data = this.dataService.getData();
+  }
 }
