@@ -14,7 +14,7 @@
   <button (click)="addPhone()" type="button">Add other phones</button><br>
   <div formArrayName="phones">
     <div *ngFor="let phone of phones.controls; index as i">
-        <app-phone [required]="i == 0 ? true : false" [phoneLabels]="phoneLabels" [index]="i" [myGroup]="phone"></app-phone>
+        <app-phone [required]="i == 0 ? true : false" [phoneLabels]="phoneLabels" [index]="i" [phoneGroup]="phone"></app-phone>
     </div>
   </div>
   <hr>

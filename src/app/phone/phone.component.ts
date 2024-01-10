@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { JsonPipe, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -19,7 +19,7 @@ import {
 })
 
 export class PhoneComponent {
-  @Input() myGroup: FormGroup = new FormGroup({});
+  @Input() phoneGroup: FormGroup = new FormGroup({});
   @Input() required: boolean = false;
   @Input() index: number = -1;
   @Input() phoneLabels: string[] = [];
@@ -27,7 +27,7 @@ export class PhoneComponent {
   constructor() {}
 
   removePhone(index: number) {
-    const optionalPhones = this.myGroup.parent as FormArray;
-    optionalPhones.removeAt(index);
+    const phones = this.phoneGroup.parent as FormArray;
+    phones.removeAt(index);
   }
 }

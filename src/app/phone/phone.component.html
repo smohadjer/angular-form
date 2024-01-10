@@ -1,18 +1,12 @@
-<ng-container [formGroup]="myGroup">
-  <!-- if parent sends labels allow user to select a label in a dropdown otherwise display default label -->
-  <ng-container *ngIf="phoneLabels.length else labelTemplate">
-    <label>
-      <select formControlName="label">
-        <option *ngFor="let label of phoneLabels" [value]="label">{{label}}</option>
-      </select>
-    </label>
-  </ng-container>
-
+<!-- phoneGroup has two FormControls inside it one with name "label" and one
+with new "number" -->
+<ng-container [formGroup]="phoneGroup">
+  <label>
+    <select formControlName="label">
+      <option *ngFor="let label of phoneLabels" [value]="label">{{label}}</option>
+    </select> {{''}} <span *ngIf="required">*</span>
+  </label>
   <input type="text" [attr.required]="required ? 'required' : null" formControlName="number" placeholder="Add phone number"> {{''}}
   <button *ngIf="!required" (click)="removePhone(index)" type="button">Remove</button>
 </ng-container>
-
-<ng-template #labelTemplate>
-  <label>Phone: <span *ngIf="required">*</span></label>
-</ng-template>
 
