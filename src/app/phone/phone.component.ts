@@ -22,9 +22,7 @@ export class PhoneComponent {
   @Input() myGroup: FormGroup = new FormGroup({});
   @Input() required: boolean = false;
   @Input() index: number = -1;
-
-  // used in template to populate label dropdown
-  phoneLabels = ['Mobile', 'Work', 'Home'];
+  @Input() phoneLabels: string[] = [];
 
   constructor() {}
 

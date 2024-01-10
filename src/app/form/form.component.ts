@@ -12,6 +12,11 @@ import { DataService } from '../data.service';
 import { PhoneComponent } from '../phone/phone.component';
 import { AddressComponent } from '../address/address.component';
 
+interface IPhone {
+  label: FormControl;
+  number: FormControl;
+};
+
 @Component({
   standalone: true,
   selector: 'reactive-form',
@@ -28,28 +33,26 @@ import { AddressComponent } from '../address/address.component';
 
 export class FormComponent implements OnInit {
   interestsList = ['Chess', 'Tennis', 'Poker'];
+  phoneLabels = ['Phone', 'Mobile', 'Work', 'Home'];
+
   formModel = {
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
     gender: new FormControl(''),
     privacy: new FormControl(false),
     address: new FormGroup({
       street: new FormControl(''),
       state: new FormControl(),
     }),
-    phone: new FormGroup(this.getPhoneModel()),
-    optionalPhones: new FormArray<FormGroup>([]),
+    phones: new FormArray<FormGroup<IPhone>>([
+      new FormGroup({
+        label: new FormControl(this.phoneLabels[0]),
+        number: new FormControl<number | null>(null, Validators.required)
+      })
+    ]),
     interests: new FormArray<FormControl>([]),
     comments: new FormControl()
   };
   myForm;
-
-  getPhoneModel() {
-    return {
-      label: new FormControl('Mobile'),
-      number: new FormControl<number | null>(null, Validators.required)
-    }
-  }
 
   constructor(private dataService: DataService) {
     this.myForm = new FormGroup(this.formModel);
@@ -64,16 +67,12 @@ export class FormComponent implements OnInit {
     this.dataService.setData(logData);
   }
 
-  get phone() {
-    return this.myForm.controls.phone;
-  }
-
   get address() {
     return this.myForm.controls.address;
   }
 
-  get optionalPhones() {
-    return this.myForm.controls.optionalPhones;
+  get phones() {
+    return this.myForm.controls.phones;
   }
 
   get interests() {
@@ -114,29 +113,37 @@ export class FormComponent implements OnInit {
     })
 
     this.myForm.patchValue({
-      firstName: 'John',
-      lastName: 'Smith',
+      name: 'John',
       gender: 'male',
       privacy: true,
-      phone: {
-        label: 'Work',
-        number: 123456789
-      },
+      phones: [
+        {
+          label: 'Phone',
+          number: 123456789
+        }
+      ],
       comments: 'I have no comments!'
     });
   }
 
   resetForm() {
     this.myForm.reset();
-    this.phone.setValue({
-      label: 'Mobile',
-      number: null
-    });
-    this.optionalPhones.clear();
+    this.phones.clear();
+    this.phones.push(
+      new FormGroup({
+        label: new FormControl(this.phoneLabels[0]),
+        number: new FormControl<number | null>(null, Validators.required)
+      })
+    );
   }
 
   addPhone() {
-    this.optionalPhones.push(new FormGroup(this.getPhoneModel()));
+    const phoneGroup = new FormGroup({
+      label: new FormControl(this.phoneLabels[0]),
+      number: new FormControl<number | null>(null, Validators.required)
+    });
+
+    this.phones.push(phoneGroup);
   }
 
   submitHandler() {

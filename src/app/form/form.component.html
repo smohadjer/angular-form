@@ -3,60 +3,50 @@
     <button type="button" (click)="populateForm()">Populate Form</button> {{''}}
     <button type="button" (click)="resetForm()">Reset Form</button>
   </div>
-  <fieldset>
-    <div>
-      <label>First name: *</label>
-      <input type="text" formControlName="firstName" required>
-    </div>
-    <div>
-      <label>Last name: *</label>
-      <input type="text" formControlName="lastName" required>
-    </div>
-  </fieldset>
+  <hr>
+  <div>
+    <label><Nav></Nav>Name: *</label>
+    <input type="text" formControlName="name" required>
+  </div>
 
-  <fieldset formGroupName="address">
-    <legend>Address</legend>
-    <app-address [myGroup]="address"></app-address>
-  </fieldset>
+  <app-address [myGroup]="address"></app-address>
+  <hr>
+  <button (click)="addPhone()" type="button">Add other phones</button><br>
+  <div formArrayName="phones">
+    <div *ngFor="let phone of phones.controls; index as i">
+        <app-phone [required]="i == 0 ? true : false" [phoneLabels]="phoneLabels" [index]="i" [myGroup]="phone"></app-phone>
+    </div>
+  </div>
+  <hr>
+  <div>
+    <label>Gender:</label>
+    <span>
+      <input id="male" type="radio" value="male" formControlName="gender"><label for="male">Male</label>  &nbsp;
+      <input id="female" type="radio" value="female" formControlName="gender"><label for="female">Female</label>
+    </span>
+  </div>
 
-  <fieldset>
-    <legend>Phones</legend>
-    <button (click)="addPhone()" type="button">Add Phone</button><br>
-    <app-phone [myGroup]="phone" [required]="true"></app-phone>
-    <div formArrayName="optionalPhones">
-      <div *ngFor="let phone of optionalPhones.controls; index as i">
-          <app-phone [index]="i" [myGroup]="phone"></app-phone>
-      </div>
-    </div>
-  </fieldset>
+  <div formArrayName="interests">
+    <label>Interests:</label>
+    <span *ngFor="let int of interests.controls; let i = index">
+      <input id="_{{i}}" type="checkbox" [formControlName]="i">
+      <label for="_{{i}}">{{interestsList[i]}}</label> &nbsp;
+    </span>
+  </div>
 
-  <fieldset>
-    <div>
-      <label>Gender:</label>
-      <span>
-        <input id="male" type="radio" value="male" formControlName="gender"><label for="male">Male</label>  &nbsp;
-        <input id="female" type="radio" value="female" formControlName="gender"><label for="female">Female</label>
-      </span>
-    </div>
-    <div formArrayName="interests">
-      <label>Interests:</label>
-      <span *ngFor="let int of interests.controls; let i = index">
-        <input id="_{{i}}" type="checkbox" [formControlName]="i">
-        <label for="_{{i}}">{{interestsList[i]}}</label> &nbsp;
-      </span>
-    </div>
-    <div>
-      <label>Comments:</label>
-      <textarea placeholder="add comments here..." cols="30" rows="5" formControlName="comments"></textarea>
-    </div>
-    <div>
-      <label>Privacy Policy:</label>
-      <span>
-        <input id="privacy" type="checkbox" formControlName="privacy" />
-        <label for="privacy">I agree</label>
-      </span>
-    </div>
-  </fieldset>
+  <div>
+    <label>Comments:</label>
+    <textarea placeholder="add comments here..." cols="30" rows="5" formControlName="comments"></textarea>
+  </div>
+
+  <div>
+    <label>Privacy Policy:</label>
+    <span>
+      <input id="privacy" type="checkbox" formControlName="privacy" />
+      <label for="privacy">I agree</label>
+    </span>
+  </div>
+
   <button type="submit" [disabled]="!myForm.valid">Submit</button>
 </form>
 
