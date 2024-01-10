@@ -21,11 +21,8 @@
 
   <fieldset>
     <legend>Phones</legend>
-    <!-- example of a required phone field -->
+    <button (click)="addPhone()" type="button">Add Phone</button><br>
     <app-phone [myGroup]="phone" [required]="true"></app-phone>
-    <br>
-    <button (click)="addPhone()" type="button">Add Phone</button>
-    <!-- example of optional phone fields -->
     <div formArrayName="optionalPhones">
       <div *ngFor="let phone of optionalPhones.controls; index as i">
           <app-phone [index]="i" [myGroup]="phone"></app-phone>

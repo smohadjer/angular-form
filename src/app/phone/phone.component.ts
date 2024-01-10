@@ -19,21 +19,12 @@ import {
 })
 
 export class PhoneComponent {
-  @Input() myGroup!: FormGroup;
+  @Input() myGroup: FormGroup = new FormGroup({});
   @Input() required: boolean = false;
   @Input() index: number = -1;
 
   // used in template to populate label dropdown
   phoneLabels = ['Mobile', 'Work', 'Home'];
-
-  static getControls(required?: boolean): FormGroup {
-    return new FormGroup({
-        // we use Mobile as default label for phone
-        label: new FormControl('Mobile'),
-        number: required ? new FormControl('', Validators.required)
-          : new FormControl('')
-     });
-  }
 
   constructor() {}
 

@@ -19,8 +19,9 @@ import {
 })
 
 export class AddressComponent {
-  @Input() myGroup!: FormGroup;
+  @Input() myGroup: FormGroup = new FormGroup({});
 
+  // to populate state dropdown in template
   states = [
     {name: 'Arizona', abbrev: 'AZ'},
     {name: 'California', abbrev: 'CA'},
@@ -28,13 +29,6 @@ export class AddressComponent {
     {name: 'New York', abbrev: 'NY'},
     {name: 'Pennsylvania', abbrev: 'PA'},
   ];
-
-  static getControls() {
-    return new FormGroup({
-      street: new FormControl(''),
-      state: new FormControl(),
-    })
-  }
 
   constructor() {}
 }

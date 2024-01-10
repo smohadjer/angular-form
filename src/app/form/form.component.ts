@@ -15,7 +15,7 @@ import { AddressComponent } from '../address/address.component';
 @Component({
   standalone: true,
   selector: 'reactive-form',
-  templateUrl: './template.html',
+  templateUrl: './form.component.html',
   imports: [
     ReactiveFormsModule,
     JsonPipe,
@@ -23,7 +23,7 @@ import { AddressComponent } from '../address/address.component';
     PhoneComponent,
     AddressComponent
   ],
-  styleUrls: ['./style.css']
+  styleUrls: ['./form.component.css']
 })
 
 export class FormComponent implements OnInit {
@@ -33,14 +33,23 @@ export class FormComponent implements OnInit {
     lastName: new FormControl('', Validators.required),
     gender: new FormControl(''),
     privacy: new FormControl(false),
-    address: AddressComponent.getControls(),
-    phone: PhoneComponent.getControls(true),
-    // optionalPhones gets populated via addPhone() method
+    address: new FormGroup({
+      street: new FormControl(''),
+      state: new FormControl(),
+    }),
+    phone: new FormGroup(this.getPhoneModel()),
     optionalPhones: new FormArray<FormGroup>([]),
     interests: new FormArray<FormControl>([]),
     comments: new FormControl()
   };
   myForm;
+
+  getPhoneModel() {
+    return {
+      label: new FormControl('Mobile'),
+      number: new FormControl<number | null>(null, Validators.required)
+    }
+  }
 
   constructor(private dataService: DataService) {
     this.myForm = new FormGroup(this.formModel);
@@ -127,7 +136,7 @@ export class FormComponent implements OnInit {
   }
 
   addPhone() {
-    this.optionalPhones.push(PhoneComponent.getControls(),);
+    this.optionalPhones.push(new FormGroup(this.getPhoneModel()));
   }
 
   submitHandler() {
