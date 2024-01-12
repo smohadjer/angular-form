@@ -1,5 +1,41 @@
-.status {
-  background-color: #eee;
-  padding: 0.5em 1em 0;
-  margin-bottom: 0.5em;
+.flex {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
 }
+
+aside {
+  background-color: #eee;
+  padding: 0 1vw;
+  order: 1;
+}
+
+main {
+  order: 2;
+  width: 100%;
+}
+
+code {
+  word-break: break-all;
+}
+
+@media (min-width: 1024px) {
+  .flex {
+    flex-wrap: nowrap;
+  }
+
+  main {
+    width: 55vw;
+    order: 1;
+  }
+
+  aside {
+    width: 40vw;
+    order: 2;
+    position: fixed;
+    right: 1em;
+    top: 1em;
+  }
+}
+
+

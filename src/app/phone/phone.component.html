@@ -4,9 +4,9 @@ with new "number" -->
   <label>
     <select formControlName="label">
       <option *ngFor="let label of phoneLabels" [value]="label">{{label}}</option>
-    </select> {{''}} <span *ngIf="required">*</span>
+    </select> {{''}} <span *ngIf="isRequired">*</span>
   </label>
-  <input type="text" [attr.required]="required ? 'required' : null" formControlName="number" placeholder="Add phone number"> {{''}}
-  <button *ngIf="!required" (click)="removePhone(index)" type="button">Remove</button>
+  <input type="text" [attr.required]="isRequired ? 'required' : null" formControlName="number" placeholder="Add phone number"> {{''}}
+  <button *ngIf="!isRequired" (click)="removePhone(index)" type="button">Remove</button>
 </ng-container>
 

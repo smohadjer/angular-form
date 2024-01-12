@@ -20,7 +20,7 @@ import {
 
 export class PhoneComponent {
   @Input() phoneGroup: FormGroup = new FormGroup({});
-  @Input() required: boolean = false;
+  @Input() isRequired: boolean = false;
   @Input() index: number = -1;
   @Input() phoneLabels: string[] = [];
 

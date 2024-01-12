@@ -9,9 +9,15 @@ label:first-child {
   }
 }
 
+input[type="radio"],
+input[type="checkbox"] {
+  margin-left: 0;
+}
+
 input[type="checkbox"] {
   vertical-align: text-bottom;
 }
+
 
 button {
   background-color:yellowgreen;
@@ -42,4 +48,23 @@ fieldset {
 
 fieldset.noborder {
   border-color: white;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+input.ng-dirty.ng-invalid {
+  border: solid 1px red;
+  background:lightpink;
+}
+
+input[type="date"],
+input[type="text"] {
+  min-width: 150px;
+}
+
+hr {
+  background-color: #ddd;
+  border: 0;
+  height: 1px;
+  margin: 1em 0;
 }

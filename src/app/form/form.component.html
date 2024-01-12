@@ -3,49 +3,66 @@
     <button type="button" (click)="populateForm()">Populate Form</button> {{''}}
     <button type="button" (click)="resetForm()">Reset Form</button>
   </div>
-  <hr>
-  <div>
-    <label><Nav></Nav>Name: *</label>
-    <input type="text" formControlName="name" required>
-  </div>
-
-  <app-address [myGroup]="address"></app-address>
-  <hr>
-  <button (click)="addPhone()" type="button">Add other phones</button><br>
-  <div formArrayName="phones">
-    <div *ngFor="let phone of phones.controls; index as i">
-        <app-phone [required]="i == 0 ? true : false" [phoneLabels]="phoneLabels" [index]="i" [phoneGroup]="phone"></app-phone>
+  <fieldset>
+    <legend>Personal Data</legend>
+    <div>
+      <label>Name: *</label>
+      <input type="text" formControlName="name">
     </div>
-  </div>
-  <hr>
-  <div>
-    <label>Gender:</label>
-    <span>
-      <input id="male" type="radio" value="male" formControlName="gender"><label for="male">Male</label>  &nbsp;
-      <input id="female" type="radio" value="female" formControlName="gender"><label for="female">Female</label>
-    </span>
-  </div>
+    <div>
+      <label>Email: *</label>
+      <input type="text" formControlName="email" required>
+    </div>
+    <div>
+      <label>Date of Birth:</label>
+      <input type="date" formControlName="birthday">
+    </div>
+    <div>
+      <label>Gender:</label>
+      <span>
+        <input id="male" type="radio" value="male" formControlName="gender"><label for="male">Male</label>  &nbsp;
+        <input id="female" type="radio" value="female" formControlName="gender"><label for="female">Female</label>
+      </span>
+    </div>
+  </fieldset>
 
-  <div formArrayName="interests">
-    <label>Interests:</label>
-    <span *ngFor="let int of interests.controls; let i = index">
-      <input id="_{{i}}" type="checkbox" [formControlName]="i">
-      <label for="_{{i}}">{{interestsList[i]}}</label> &nbsp;
-    </span>
-  </div>
+  <fieldset>
+    <legend>Contact Info</legend>
+    <app-address [myGroup]="address"></app-address>
+    <div formArrayName="phones">
+      @for (phone of phones.controls; track $index) {
+        <div>
+          <app-phone [isRequired]="$index === 0 ? true : false" [phoneLabels]="phoneLabels" [index]="$index" [phoneGroup]="phone"></app-phone>
+        </div>
+      }
+    </div>
+    <button style="margin-top: 0.5em" (click)="addPhone()" type="button">Add more phones</button>
+  </fieldset>
 
-  <div>
-    <label>Comments:</label>
-    <textarea placeholder="add comments here..." cols="30" rows="5" formControlName="comments"></textarea>
-  </div>
+  <fieldset>
+    <legend>Additional Info</legend>
+    <div formArrayName="interests">
+      <label>Interests:</label>
+      @for (interest of interests.controls; track $index) {
+        <input id="_{{$index}}" type="checkbox" [formControlName]="$index">
+        <label for="_{{$index}}">{{interestsList[$index]}}</label> &nbsp;
+      }
+    </div>
+    <div>
+      <label>Comments:</label>
+      <textarea placeholder="add comments here..." cols="30" rows="5" formControlName="comments"></textarea>
+    </div>
+  </fieldset>
 
-  <div>
-    <label>Privacy Policy:</label>
-    <span>
-      <input id="privacy" type="checkbox" formControlName="privacy" />
-      <label for="privacy">I agree</label>
-    </span>
-  </div>
+  <fieldset class="noborder">
+    <div>
+      <label>Privacy Policy: *</label>
+      <span>
+        <input id="privacy" type="checkbox" formControlName="privacy" required />
+        <label for="privacy">I agree</label>
+      </span>
+    </div>
+  </fieldset>
 
   <button type="submit" [disabled]="!myForm.valid">Submit</button>
 </form>

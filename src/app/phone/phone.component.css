@@ -12,3 +12,8 @@ label:first-child {
 select {
   font-weight: bold;
 }
+
+input.ng-dirty.ng-invalid {
+  border: solid 1px red;
+  background:lightpink;
+}

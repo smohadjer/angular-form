@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { JsonPipe, NgFor } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -23,8 +22,6 @@ interface IPhone {
   templateUrl: './form.component.html',
   imports: [
     ReactiveFormsModule,
-    JsonPipe,
-    NgFor,
     PhoneComponent,
     AddressComponent
   ],
@@ -36,9 +33,11 @@ export class FormComponent implements OnInit {
   phoneLabels = ['Phone', 'Mobile', 'Work', 'Home'];
 
   formModel = {
-    name: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    birthday: new FormControl(''),
     gender: new FormControl(''),
-    privacy: new FormControl(false),
+    privacy: new FormControl(false, [Validators.required]),
     address: new FormGroup({
       street: new FormControl(''),
       state: new FormControl(),
@@ -46,7 +45,7 @@ export class FormComponent implements OnInit {
     phones: new FormArray<FormGroup<IPhone>>([
       new FormGroup({
         label: new FormControl(this.phoneLabels[0]),
-        number: new FormControl<number | null>(null, Validators.required)
+        number: new FormControl<number | null>(null, [Validators.required])
       })
     ]),
     interests: new FormArray<FormControl>([]),
@@ -81,7 +80,8 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     // add interest controls to model
-    this.interestsList.forEach(() => {
+    this.interestsList.forEach((item) => {
+      console.log(item);
       this.interests.push(new FormControl(false));
     });
 
@@ -116,6 +116,7 @@ export class FormComponent implements OnInit {
       name: 'John',
       gender: 'male',
       privacy: true,
+      email: 'test@gmail.com',
       phones: [
         {
           label: 'Phone',
@@ -140,7 +141,7 @@ export class FormComponent implements OnInit {
   addPhone() {
     const phoneGroup = new FormGroup({
       label: new FormControl(this.phoneLabels[0]),
-      number: new FormControl<number | null>(null, Validators.required)
+      number: new FormControl<number | null>(null)
     });
 
     this.phones.push(phoneGroup);
