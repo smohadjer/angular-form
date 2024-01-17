@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import {
   FormControl,
@@ -19,7 +19,11 @@ import {
 })
 
 export class AddressComponent {
-  @Input() myGroup: FormGroup = new FormGroup({});
+  @Input() parentFormGroup!: FormGroup;
+  addressFormGroup: FormGroup = new FormGroup({
+    street: new FormControl('', Validators.required),
+    state: new FormControl(),
+  });
 
   // to populate state dropdown in template
   states = [
@@ -31,4 +35,16 @@ export class AddressComponent {
   ];
 
   constructor() {}
+
+  ngOnInit(): void {
+    this.parentFormGroup.addControl('address', this.addressFormGroup);
+  }
+
+  public get isValid(): boolean {
+    return this.addressFormGroup.valid;
+  }
+
+  public get isDirty(): boolean {
+    return this.addressFormGroup.dirty;
+  }
 }

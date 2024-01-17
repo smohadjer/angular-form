@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { JsonPipe } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -10,11 +11,7 @@ import {
 import { DataService } from '../data.service';
 import { PhoneComponent } from '../phone/phone.component';
 import { AddressComponent } from '../address/address.component';
-
-interface IPhone {
-  label: FormControl;
-  number: FormControl;
-};
+import { IForm } from '../app.types';
 
 @Component({
   standalone: true,
@@ -23,7 +20,8 @@ interface IPhone {
   imports: [
     ReactiveFormsModule,
     PhoneComponent,
-    AddressComponent
+    AddressComponent,
+    JsonPipe
   ],
   styleUrls: ['./form.component.css']
 })
@@ -32,17 +30,13 @@ export class FormComponent implements OnInit {
   interestsList = ['Chess', 'Tennis', 'Poker'];
   phoneLabels = ['Phone', 'Mobile', 'Work', 'Home'];
 
-  formModel = {
+  formModel: IForm = {
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     birthday: new FormControl(''),
     gender: new FormControl(''),
     privacy: new FormControl(false, [Validators.required]),
-    address: new FormGroup({
-      street: new FormControl(''),
-      state: new FormControl(),
-    }),
-    phones: new FormArray<FormGroup<IPhone>>([
+    phones: new FormArray([
       new FormGroup({
         label: new FormControl(this.phoneLabels[0]),
         number: new FormControl<number | null>(null, [Validators.required])
@@ -64,10 +58,6 @@ export class FormComponent implements OnInit {
       status:  JSON.stringify(this.myForm.status)
     };
     this.dataService.setData(logData);
-  }
-
-  get address() {
-    return this.myForm.controls.address;
   }
 
   get phones() {
@@ -107,16 +97,15 @@ export class FormComponent implements OnInit {
       item.setValue(true);
     });
 
-    this.address.setValue({
-      street: 'Hamilton 123',
-      state: 'NY'
-    })
-
     this.myForm.patchValue({
       name: 'John',
       gender: 'male',
       privacy: true,
       email: 'test@gmail.com',
+      address: {
+        street: 'Hamilton 123',
+        state: 'NY'
+      },
       phones: [
         {
           label: 'Phone',
@@ -125,6 +114,8 @@ export class FormComponent implements OnInit {
       ],
       comments: 'I have no comments!'
     });
+
+    console.log(this.myForm.controls.address?.value);
   }
 
   resetForm() {

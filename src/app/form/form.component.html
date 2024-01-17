@@ -27,8 +27,15 @@
   </fieldset>
 
   <fieldset>
-    <legend>Contact Info</legend>
-    <app-address [myGroup]="address"></app-address>
+    <legend>Address</legend>
+    <app-address [parentFormGroup]="myForm" #address></app-address>
+    <p>Address isValid: {{ address.isValid }}</p>
+    <p>Address isDirty: {{ address.isDirty }}</p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Phones</legend>
+
     <div formArrayName="phones">
       @for (phone of phones.controls; track $index) {
         <div>

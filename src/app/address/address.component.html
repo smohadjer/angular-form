@@ -1,16 +1,18 @@
-<ng-container [formGroup]="myGroup">
-  <div>
-    <label>Street:</label>
-    <input type="text" formControlName="street">
-  </div>
-  <div>
-    <label>State:</label>
-    <select formControlName="state">
-      <option selected value="null">Select your state</option>
-      <option *ngFor="let state of states" [ngValue]="state.abbrev">
-        {{ state.name }}
-      </option>
-    </select>
-  </div>
+<ng-container [formGroup]="parentFormGroup">
+  <ng-container formGroupName="address">
+    <div>
+      <label>Street: *</label>
+      <input type="text" formControlName="street">
+    </div>
+    <div>
+      <label>State:</label>
+      <select formControlName="state">
+        <option selected value="null">Select your state</option>
+        <option *ngFor="let state of states" [ngValue]="state.abbrev">
+          {{ state.name }}
+        </option>
+      </select>
+    </div>
+  </ng-container>
 </ng-container>
 
