@@ -6,17 +6,15 @@
   <fieldset>
     <legend>Personal Data</legend>
     <div>
-      <label>Name: *</label>
-      <input type="text" formControlName="name">
+      <label>Rating:</label>
+      <rating-input [parentFormGroup]="myForm"></rating-input>
     </div>
-    <div>
-      <label>Email: *</label>
-      <input type="text" formControlName="email" required>
-    </div>
-    <div>
-      <label>Date of Birth:</label>
-      <input type="date" formControlName="birthday">
-    </div>
+
+    <!-- examples of using another component for input fields -->
+    <app-input label="Name" [isRequired]="true" [parentFormControl]="myForm.controls.name"></app-input>
+    <app-input label="Email" [isRequired]="true" [parentFormControl]="myForm.controls.email"></app-input>
+    <app-input label="Date of Birth" type="date" [parentFormControl]="myForm.controls.birthday"></app-input>
+
     <div>
       <label>Gender:</label>
       <span>

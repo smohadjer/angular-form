@@ -18,7 +18,7 @@ import {
   styleUrl: './address.component.css'
 })
 
-export class AddressComponent {
+export class AddressComponent implements OnInit {
   @Input() parentFormGroup!: FormGroup;
   addressFormGroup: FormGroup = new FormGroup({
     street: new FormControl('', Validators.required),

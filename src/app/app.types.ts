@@ -24,4 +24,5 @@ export interface Form {
   phones: FormArray<FormGroup<Phone>>,
   interests: FormArray<FormControl<boolean>>,
   comments: FormControl<string>
+  rating?: FormControl<number>
 }

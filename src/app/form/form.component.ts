@@ -11,6 +11,9 @@ import {
 import { DataService } from '../data.service';
 import { PhoneComponent } from '../phone/phone.component';
 import { AddressComponent } from '../address/address.component';
+import { RatingInputComponent } from '../rating/rating-input.component'
+import { InputComponent } from '../input/input.component'
+
 import { Form } from '../app.types';
 
 @Component({
@@ -21,6 +24,8 @@ import { Form } from '../app.types';
     ReactiveFormsModule,
     PhoneComponent,
     AddressComponent,
+    RatingInputComponent,
+    InputComponent,
     JsonPipe
   ],
   styleUrls: ['./form.component.css']
