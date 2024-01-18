@@ -52,7 +52,7 @@
       <label>Interests:</label>
       @for (interest of interests.controls; track $index) {
         <input id="_{{$index}}" type="checkbox" [formControlName]="$index">
-        <label for="_{{$index}}">{{interestsList[$index]}}</label> &nbsp;
+        <label for="_{{$index}}">{{interestsList[$index].name}}</label> &nbsp;
       }
     </div>
     <div>

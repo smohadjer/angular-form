@@ -27,7 +27,11 @@ import { Form } from '../app.types';
 })
 
 export class FormComponent implements OnInit {
-  interestsList = ['Chess', 'Tennis', 'Poker'];
+  interestsList = [
+    {name: 'Chess', value: 'chess'},
+    {name: 'Tennis', value: 'tennis'},
+    {name: 'Poker', value: 'poker'}
+  ];
   phoneLabels = ['Phone', 'Mobile', 'Work', 'Home'];
 
   formModel: Form = {
@@ -74,8 +78,7 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     // add interest controls to model
     this.interestsList.forEach((item) => {
-      console.log(item);
-      this.interests.push(new FormControl(false));
+      this.interests.push(new FormControl(false, {nonNullable: true}));
     });
 
     // we can set values of form fields like this
