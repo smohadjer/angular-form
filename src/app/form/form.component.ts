@@ -11,7 +11,7 @@ import {
 import { DataService } from '../data.service';
 import { PhoneComponent } from '../phone/phone.component';
 import { AddressComponent } from '../address/address.component';
-import { IForm } from '../app.types';
+import { Form } from '../app.types';
 
 @Component({
   standalone: true,
@@ -30,12 +30,15 @@ export class FormComponent implements OnInit {
   interestsList = ['Chess', 'Tennis', 'Poker'];
   phoneLabels = ['Phone', 'Mobile', 'Work', 'Home'];
 
-  formModel: IForm = {
-    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+  formModel: Form = {
+    name: new FormControl('',  {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(2)]
+    }),
     email: new FormControl('', [Validators.required, Validators.email]),
     birthday: new FormControl(''),
     gender: new FormControl(''),
-    privacy: new FormControl(false, [Validators.required]),
+    privacy: new FormControl(false, {nonNullable: true, validators: [Validators.required]}),
     phones: new FormArray([
       new FormGroup({
         label: new FormControl(this.phoneLabels[0]),
