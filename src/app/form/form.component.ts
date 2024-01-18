@@ -11,7 +11,7 @@ import {
 import { DataService } from '../data.service';
 import { PhoneComponent } from '../phone/phone.component';
 import { AddressComponent } from '../address/address.component';
-import { RatingInputComponent } from '../rating/rating-input.component'
+import { RatingInputComponent } from '../rating/rating.component'
 import { InputComponent } from '../input/input.component'
 
 import { Form } from '../app.types';
@@ -117,6 +117,7 @@ export class FormComponent implements OnInit {
         street: 'Hamilton 123',
         state: 'NY'
       },
+      rating: 3,
       phones: [
         {
           label: 'Phone',

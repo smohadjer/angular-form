@@ -5,10 +5,6 @@
   </div>
   <fieldset>
     <legend>Personal Data</legend>
-    <div>
-      <label>Rating:</label>
-      <rating-input [parentFormGroup]="myForm"></rating-input>
-    </div>
 
     <!-- examples of using another component for input fields -->
     <app-input label="Name" [isRequired]="true" [parentFormControl]="myForm.controls.name"></app-input>
@@ -60,6 +56,10 @@
   </fieldset>
 
   <fieldset class="noborder">
+    <div>
+      <label>Rating:</label>
+      <rating-input [defaultValue]="0" [parentFormGroup]="myForm"></rating-input>
+    </div>
     <div>
       <label>Privacy Policy: *</label>
       <span>

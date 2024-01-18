@@ -3,9 +3,8 @@ import {
   ReactiveFormsModule,
   FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, NgClass } from '@angular/common';
 
 @Component({
   selector: 'rating-input',
@@ -13,29 +12,40 @@ import { NgFor, NgIf } from '@angular/common';
   imports: [
     NgFor,
     NgIf,
+    NgClass,
     ReactiveFormsModule
   ],
-  template: `
-    <ng-container [formGroup]="parentFormGroup">
-      <span *ngFor="let starred of stars; let i = index"
-        (click)="rate(i + (starred ? (value > i + 1 ? 1 : 0) : 1))">
-        <ng-container *ngIf="starred; else noStar">&#11088;</ng-container>
-        <ng-template #noStar>&#11090;</ng-template>
-      </span>
-    </ng-container>
-  `,
+  templateUrl: './rating.component.html',
   styleUrl: './rating.component.css'
 })
 export class RatingInputComponent implements OnInit {
   @Input() parentFormGroup!: FormGroup;
-  inputFormControl = new FormControl();
+  @Input() defaultValue: number = 0;
 
+  inputFormControl = new FormControl();
   stars: boolean[] = Array(5).fill(false);
 
-  constructor() {}
+  constructor() {
+    this.inputFormControl.valueChanges.subscribe((value) => {
+      console.log(value);
+      this.updateStars(value);
+    });
+  }
 
   ngOnInit(): void {
-      this.parentFormGroup.addControl('rating', this.inputFormControl);
+    this.inputFormControl.setValue(this.defaultValue);
+    this.parentFormGroup.addControl('rating', this.inputFormControl);
+    this.updateStars(this.defaultValue);
+  }
+
+  updateStars(value: number) {
+    if (value) {
+      this.stars.forEach((item, index) => {
+        this.stars[index] = index < value;
+      });
+    } else {
+      this.stars.fill(false);
+    }
   }
 
   get value(): number {

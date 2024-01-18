@@ -5,3 +5,8 @@ span {
   text-align: center;
   cursor: pointer;
 }
+
+span.off {
+  font-size: 25px;
+  vertical-align: -1px;
+}
